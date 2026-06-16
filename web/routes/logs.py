@@ -35,20 +35,31 @@ def api_all_logs():
 
 @bp.route('/api/logs/clear', methods=['POST'])
 def api_clear_logs():
-    ip = (request.json or {}).get("ip")
+    data = request.json or {}
+    ip = data.get("ip")
+    types = data.get("types") # لیستی از نوع‌های انتخابی برای حذف
+    
+    if types and not isinstance(types, list):
+        return jsonify({"error": "فرمت types نامعتبر است"}), 400
+
     allowed_offices = user_allowed_offices(current_user)
     allowed_ips = allowed_printer_ips(current_user)
+    
     if allowed_offices:
         if ip:
             if ip not in allowed_ips:
                 return jsonify({"error": "forbidden"}), 403
-            deleted = clear_logs(ip)
+            deleted = clear_logs(ip, types=types)
         else:
-            deleted = clear_logs(ips=allowed_ips)
+            deleted = clear_logs(ips=allowed_ips, types=types)
     else:
-        deleted = clear_logs(ip)
-    return jsonify({"status": "cleared", "deleted": deleted,
-                    "note": "رویدادهای PRINT حفظ شدند"})
+        deleted = clear_logs(ip, types=types)
+        
+    return jsonify({
+        "status": "cleared", 
+        "deleted": deleted,
+        "note": "رویدادها با موفقیت پاکسازی شدند"
+    })
 
 
 @bp.route('/api/events/manual', methods=['POST'])

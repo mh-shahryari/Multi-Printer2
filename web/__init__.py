@@ -16,6 +16,7 @@ from web.routes.validation import bp as bp_validation
 from web.routes.system     import bp as bp_system
 from web.routes.users      import bp as bp_users
 from web.routes.security   import bp as bp_security_audit
+from web.routes.import_db import bp as bp_import_db
 from web.auth import auth_bp, init_auth, user_can_access_module
 from web.security import init_security, csrf
 from config import settings
@@ -52,7 +53,7 @@ def create_app() -> Flask:
         auth_bp,
         bp_dashboard, bp_printers, bp_logs, bp_export,
         bp_scan, bp_discover, bp_stats, bp_validation, bp_system, bp_users,
-        bp_security_audit,
+        bp_security_audit, bp_import_db,
     ):
         app.register_blueprint(blueprint)
 

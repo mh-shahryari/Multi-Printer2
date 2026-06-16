@@ -36,10 +36,16 @@ function toggleTheme() {
 }
 
 function updateThemeLabel() {
-  const el = document.getElementById('theme-label');
-  if (!el) return;
+  const labelEl = document.getElementById('theme-label');
+  const iconEl = document.getElementById('theme-icon');
   const isLight = document.documentElement.classList.contains('light');
-  el.textContent = isLight ? '🌙 تم تاریک' : '☀️ تم روشن';
+  
+  if (labelEl) {
+    labelEl.textContent = isLight ? 'تم تاریک' : 'تم روشن';
+  }
+  if (iconEl) {
+    iconEl.textContent = isLight ? '🌙' : '☀️';
+  }
 }
 
 // ─── Topbar Dropdown Menu ────────────────────────
@@ -51,9 +57,28 @@ function closeTopbarMenu() {
   const el = document.getElementById('topbar-more');
   if (el) el.classList.remove('open');
 }
+
+// ─── سیستم دراپ‌داون عمومی ───
+function toggleDropdown(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    // بستن بقیه دراپ‌داون‌ها
+    document.querySelectorAll('.dropdown').forEach(d => {
+      if (d.id !== id) d.classList.remove('open');
+    });
+    el.classList.toggle('open');
+  }
+}
+
 document.addEventListener('click', function(e) {
-  const el = document.getElementById('topbar-more');
-  if (el && !el.contains(e.target)) el.classList.remove('open');
+  // بستن منوی تاپ‌بار
+  const topbarMore = document.getElementById('topbar-more');
+  if (topbarMore && !topbarMore.contains(e.target)) topbarMore.classList.remove('open');
+  
+  // بستن دراپ‌داون‌های عمومی
+  if (!e.target.closest('.dropdown')) {
+    document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
+  }
 });
 
 // ══════════════════════════════════════════════════
@@ -558,16 +583,23 @@ function rebuildTabs(printers) {
   const badge = document.getElementById('sb-ov-badge');
   if (badge) badge.textContent = totalOnline + '▲ ' + totalOffline + '▼';
 
-  const grouped = {};
-  OFFICE_GROUPS.forEach(g => { grouped[g.id] = []; });
-  printers.forEach(p => { grouped[getOfficeGroup(p.ip)].push(p); });
+  // استخراج گروه‌های پویا
+  const groups = new Map();
+  OFFICE_GROUPS.forEach(g => groups.set(g.id, { ...g, printers: [] }));
+  
+  printers.forEach(p => {
+    let gid = p.group || getOfficeGroup(p.ip);
+    if (!groups.has(gid)) {
+      groups.set(gid, { id: gid, name: gid, icon: '🏢', color: 'cyan', printers: [] });
+    }
+    groups.get(gid).printers.push(p);
+  });
 
   const order = getPrinterOrder(printers);
-
   container.innerHTML = '';
 
-  OFFICE_GROUPS.forEach(g => {
-    let members = grouped[g.id];
+  groups.forEach(g => {
+    let members = g.printers;
     if (!members.length) return;
 
     members.sort((a, b) => order.indexOf(a.ip) - order.indexOf(b.ip));
@@ -581,24 +613,14 @@ function rebuildTabs(printers) {
     }
 
     const groupEl = document.createElement('div');
-    groupEl.className = 'sb-group' + (_groupOpen[g.id] ? ' open' : '');
+    groupEl.className = 'sb-group' + (_groupOpen[g.id] ? ' open' : '') + (activeGroupFilter === g.id ? ' active-group' : '');
     groupEl.dataset.color = g.color;
     groupEl.id = 'sbg-' + g.id;
 
     const metaHtml = `
       <div class="sb-meta-group">
-        ${onCnt ? `
-          <div class="sb-meta-item">
-            <span class="sb-meta-dot online"></span>
-            <span class="sb-meta-count">${onCnt}</span>
-          </div>
-        ` : ''}
-        ${offCnt ? `
-          <div class="sb-meta-item">
-            <span class="sb-meta-dot offline"></span>
-            <span class="sb-meta-count">${offCnt}</span>
-          </div>
-        ` : ''}
+        ${onCnt ? `<div class="sb-meta-item"><span class="sb-meta-dot online"></span><span class="sb-meta-count">${onCnt}</span></div>` : ''}
+        ${offCnt ? `<div class="sb-meta-item"><span class="sb-meta-dot offline"></span><span class="sb-meta-count">${offCnt}</span></div>` : ''}
       </div>
     `;
 
@@ -606,32 +628,59 @@ function rebuildTabs(printers) {
       const dotCls    = p.online === true ? 'online' : (p.online === false ? 'offline' : 'unknown');
       const hasAl     = p.alerts && p.alerts.length;
       const alertIcon = hasAl ? '<span class="sb-alert-icon">⚠</span>' : '';
-      const alertCls  = hasAl ? ' has-alert' : '';
       const activeCls = activeTab === p.ip ? ' active' : '';
       const displayName = p.nickname ? `${escapeHtml(p.nickname)} (${escapeHtml(p.name)})` : escapeHtml(p.name);
-      return '<div class="sb-item' + activeCls + alertCls +
-             '" data-tab="' + p.ip + '" onclick="switchTab(\'' + p.ip + '\',this)">' +
-               '<span class="sb-dot ' + dotCls + '"></span>' +
-               '<span class="sb-item-name">' + displayName + '</span>' +
-               alertIcon +
-             '</div>';
+      return `<div class="sb-item${activeCls}${hasAl?' has-alert':''}" data-tab="${p.ip}" onclick="switchTab('${p.ip}',this)">
+               <span class="sb-dot ${dotCls}"></span>
+               <span class="sb-item-name">${displayName}</span>
+               ${alertIcon}
+             </div>`;
     }).join('');
 
-    groupEl.innerHTML =
-      '<div class="sb-group-hdr' + (hasAlert ? ' has-alert' : '') +
-      '" onclick="toggleSbGroup(\'' + g.id + '\')">' +
-        '<span class="sb-arrow">▶</span>' +
-        '<span class="sb-group-icon">' + g.icon + '</span>' +
-        '<span class="sb-group-name">' + g.name + '</span>' +
-        '<span class="sb-group-meta">' + metaHtml + '</span>' +
-      '</div>' +
-      '<div class="sb-group-body">' + itemsHtml + '</div>';
+    groupEl.innerHTML = `
+      <div class="sb-group-hdr${hasAlert ? ' has-alert' : ''}" onclick="filterByGroup('${g.id}')">
+        <span class="sb-arrow" onclick="event.stopPropagation();toggleSbGroup('${g.id}')">▶</span>
+        <span class="sb-group-icon">${g.icon}</span>
+        <span class="sb-group-name">${g.name}</span>
+        <span class="sb-group-meta">${metaHtml}</span>
+      </div>
+      <div class="sb-group-body">${itemsHtml}</div>
+    `;
 
     container.appendChild(groupEl);
   });
 
+  // بروزرسانی لیست گروه‌ها در مودال افزودن
+  const groupSelect = document.getElementById('add-group-select');
+  if (groupSelect) {
+    const currentVal = groupSelect.value;
+    groupSelect.innerHTML = '<option value="">(انتخاب گروه...)</option>';
+    groups.forEach(g => {
+      groupSelect.innerHTML += `<option value="${g.id}">${g.name}</option>`;
+    });
+    groupSelect.value = currentVal;
+  }
+
   const ovBtn = document.querySelector('.sb-overview');
   if (ovBtn) ovBtn.classList.toggle('active', activeTab === 'overview');
+}
+
+let activeGroupFilter = null;
+
+function filterByGroup(groupId) {
+  activeTab = 'overview'; // فیلتر در نمای کلی اعمال می‌شود
+  activeGroupFilter = groupId;
+  
+  document.querySelectorAll('.sb-item, .sb-overview').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.sb-group').forEach(g => g.classList.remove('active-group'));
+  
+  const gEl = document.getElementById('sbg-' + groupId);
+  if (gEl) gEl.classList.add('active-group');
+
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-overview').classList.add('active');
+  
+  renderOverviewCards(allData);
 }
 
 function toggleSbGroup(id) {
@@ -685,26 +734,43 @@ function schedulePrinterDailyChartLoad(ip, delay = 50, force = false) {
 
 function switchTab(id, el) {
   activeTab = id;
+  
+  // اگر روی یک پرینتر کلیک شد، فیلتر گروه را پاک کن
+  if (id !== 'overview' && !id.startsWith('group:')) {
+    activeGroupFilter = null;
+  }
+
   document.querySelectorAll('.sb-item, .sb-overview').forEach(t => t.classList.remove('active'));
-  if (el) {
+  document.querySelectorAll('.sb-group').forEach(g => g.classList.remove('active-group'));
+
+  if (id === 'overview') {
+    activeGroupFilter = null;
+    const ovBtn = document.querySelector('.sb-overview');
+    if (ovBtn) ovBtn.classList.add('active');
+  } else if (el) {
     el.classList.add('active');
   } else {
     const found = document.querySelector('[data-tab="' + id + '"]');
     if (found) found.classList.add('active');
   }
+
   if (id !== 'overview') {
-    const gid = getOfficeGroup(id);
+    const p = allData.find(x => x.ip === id);
+    const gid = p?.group || getOfficeGroup(id);
     if (!_groupOpen[gid]) {
       _groupOpen[gid] = true;
       const gEl = document.getElementById('sbg-' + gid);
       if (gEl) gEl.classList.add('open');
     }
   }
+
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  const panel = document.getElementById('panel-' + id.replace(/\./g, '-'));
+  const panelId = id.replace(/\./g, '-');
+  const panel = document.getElementById('panel-' + panelId) || document.getElementById('panel-overview');
   if (panel) {
     panel.classList.add('active');
-    schedulePrinterDailyChartLoad(id);
+    if (id !== 'overview') schedulePrinterDailyChartLoad(id);
+    if (id === 'overview' || activeGroupFilter) renderOverviewCards(allData);
   }
 }
 
@@ -715,18 +781,22 @@ function renderOverviewCards(printers) {
   const grid = document.getElementById('overview-grid');
   if (!printers.length) {
     grid.innerHTML = '<div style="padding:60px;text-align:center;color:var(--text3);font-family:var(--mono)">پرینتری تعریف نشده</div>';
-    if (sortableInstance) {
-      try {
-        sortableInstance.destroy();
-      } catch(e) {}
-      sortableInstance = null;
-    }
+    if (sortableInstance) { try { sortableInstance.destroy(); } catch(e) {} sortableInstance = null; }
     return;
   }
 
   currentPrinters = printers;
-  const orderedPrinters = sortPrintersForDisplay(printers);
+  
+  // اعمال فیلتر بر اساس گروه
+  let displayPrinters = printers;
+  if (activeGroupFilter) {
+    displayPrinters = printers.filter(p => {
+        let gid = p.group || getOfficeGroup(p.ip);
+        return gid === activeGroupFilter;
+    });
+  }
 
+  const orderedPrinters = sortPrintersForDisplay(displayPrinters);
   grid.innerHTML = orderedPrinters.map(p => renderPrinterCard(p)).join('');
 
   if (sortableInstance) {
@@ -738,33 +808,34 @@ function renderOverviewCards(printers) {
     sortableInstance = null;
   }
 
-  sortableInstance = new Sortable(grid, {
-    animation: 400,
-    easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-    sort: true,
-    swap: true,
-    swapThreshold: 0.65,
-    fallbackTolerance: 5,
-    delay: 0,
-    // class names applied by Sortable for styling
-    chosenClass: 'sortable-chosen',
-    ghostClass: 'sortable-ghost',
-    dragClass: 'sortable-drag',
-    // smooth callbacks to update ordering
-    onChoose: function(evt) {
-      document.body.classList.add('is-dragging');
-    },
-    onUnchoose: function(evt) {
-      document.body.classList.remove('is-dragging');
-    },
-    onEnd: function(evt) {
-      document.body.classList.remove('is-dragging');
-      const items = grid.querySelectorAll('.overview-card');
-      const newOrder = Array.from(items).map(card => card.getAttribute('data-ip'));
-      savePrinterOrder(newOrder);
-      setTimeout(() => rebuildTabs(currentPrinters), 50);
-    }
-  });
+  // فقط در صورتی که فیلتر فعال نباشد اجازه جابجایی می‌دهیم
+  if (!activeGroupFilter) {
+    sortableInstance = new Sortable(grid, {
+        animation: 400,
+        easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+        sort: true,
+        swap: true,
+        swapThreshold: 0.65,
+        fallbackTolerance: 5,
+        delay: 0,
+        chosenClass: 'sortable-chosen',
+        ghostClass: 'sortable-ghost',
+        dragClass: 'sortable-drag',
+        onChoose: function(evt) {
+          document.body.classList.add('is-dragging');
+        },
+        onUnchoose: function(evt) {
+          document.body.classList.remove('is-dragging');
+        },
+        onEnd: function(evt) {
+          document.body.classList.remove('is-dragging');
+          const items = grid.querySelectorAll('.overview-card');
+          const newOrder = Array.from(items).map(card => card.getAttribute('data-ip'));
+          savePrinterOrder(newOrder);
+          setTimeout(() => rebuildTabs(currentPrinters), 50);
+        }
+    });
+  }
 }
 
 // ══════════════════════════════════════════════════
@@ -923,19 +994,19 @@ function buildPrinterDetail(p) {
   const ip = p.ip;
   const logId = 'plog-' + ip.replace(/\./g,'-');
   const displayName = p.nickname ? escapeHtml(p.nickname) : escapeHtml(p.name);
-  const nicknameButtonHtml = canEditPrinters()
-    ? `<button class="btn btn-sm" onclick="editNickname('${p.ip}', '${escapeHtml(p.nickname || '')}')" 
-                 style="font-size:10px; margin-right:8px; padding:2px 6px;">✏️</button>`
+  const editButtonHtml = canEditPrinters()
+    ? `<button class="btn btn-sm" onclick="openEditModal('${p.ip}')" 
+                 style="font-size:10px; margin-right:8px; padding:2px 6px;" title="ویرایش اطلاعات و گروه">⚙️</button>`
     : '';
   const nameLine = p.nickname
     ? `<div style="font-size:16px;font-weight:700;margin-top:2px">
          ${displayName}
-         ${nicknameButtonHtml}
+         ${editButtonHtml}
        </div>
        <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:2px">نام اصلی: ${escapeHtml(p.name)}</div>`
     : `<div style="font-size:16px;font-weight:700;margin-top:2px">
          ${displayName}
-          ${nicknameButtonHtml}
+          ${editButtonHtml}
        </div>`;
 
   // ✅ باگ #6: حذف دکمه حذف تکراری — فقط printerDeleteButtonHtml استفاده می‌شود
@@ -950,10 +1021,18 @@ function buildPrinterDetail(p) {
         <input type="datetime-local" class="printer-log-start" data-ip="${ip}" style="width:auto; font-family:var(--mono); font-size:11px;" title="شروع بازه">
         <input type="datetime-local" class="printer-log-end" data-ip="${ip}" style="width:auto; font-family:var(--mono); font-size:11px;" title="پایان بازه">
         <button class="btn btn-cyan" onclick="applyDateFilter('${ip}')">🔍 اعمال فیلتر</button>
-        <button class="btn btn-yellow" onclick="exportLogsWithRange('${ip}', 'excel')">↓ Excel (بازه)</button>
-        <button class="btn btn-orange" onclick="exportLogsWithRange('${ip}', 'csv')">↓ CSV (بازه)</button>
-        <button class="btn btn-yellow" onclick="exportPrinterLogExcel('${ip}')">↓ Excel</button>
-        <button class="btn btn-orange" onclick="exportPrinterLogJSON('${ip}')">↓ JSON</button>
+        
+        <div class="dropdown" id="export-dropdown-${ip.replace(/\./g, '-')}">
+          <button class="btn btn-yellow dropdown-toggle" onclick="toggleDropdown('export-dropdown-${ip.replace(/\./g, '-')}')">📥 خروجی گزارش‌ها ▼</button>
+          <div class="dropdown-menu">
+            <button class="dropdown-item" onclick="exportLogsWithRange('${ip}', 'excel')">📊 Excel (بازه انتخابی)</button>
+            <button class="dropdown-item" onclick="exportLogsWithRange('${ip}', 'csv')">📄 CSV (بازه انتخابی)</button>
+            <div class="topbar-dropdown-divider"></div>
+            <button class="dropdown-item" onclick="exportPrinterLogExcel('${ip}')">📈 کل لاگ (Excel)</button>
+            <button class="dropdown-item" onclick="exportPrinterLogJSON('${ip}')">🔗 کل لاگ (JSON)</button>
+          </div>
+        </div>
+
         <button class="btn" style="border-color:rgba(255,61,61,.3);color:var(--red);background:rgba(255,61,61,.06)" onclick="clearPrinterLog('${ip}')">× پاک</button>
       `
     : canManage()
@@ -961,8 +1040,14 @@ function buildPrinterDetail(p) {
         <input type="datetime-local" class="printer-log-start" data-ip="${ip}" style="width:auto; font-family:var(--mono); font-size:11px;" title="شروع بازه">
         <input type="datetime-local" class="printer-log-end" data-ip="${ip}" style="width:auto; font-family:var(--mono); font-size:11px;" title="پایان بازه">
         <button class="btn btn-cyan" onclick="applyDateFilter('${ip}')">🔍 اعمال فیلتر</button>
-        <button class="btn btn-yellow" onclick="exportLogsWithRange('${ip}', 'excel')">↓ Excel (بازه)</button>
-        <button class="btn btn-yellow" onclick="exportPrinterLogExcel('${ip}')">↓ Excel</button>
+        
+        <div class="dropdown" id="export-dropdown-${ip.replace(/\./g, '-')}">
+          <button class="btn btn-yellow dropdown-toggle" onclick="toggleDropdown('export-dropdown-${ip.replace(/\./g, '-')}')">📥 خروجی ▼</button>
+          <div class="dropdown-menu">
+            <button class="dropdown-item" onclick="exportLogsWithRange('${ip}', 'excel')">📊 Excel (بازه)</button>
+            <button class="dropdown-item" onclick="exportPrinterLogExcel('${ip}')">📈 کل لاگ (Excel)</button>
+          </div>
+        </div>
       `
       : '';
 
@@ -1151,6 +1236,10 @@ function buildSensorDetail(p) {
     ? c.hum_ports
     : [{port: 1, value: c.hum1, status: c.hum1_status}, ...(c.hum2 !== null && c.hum2 !== undefined ? [{port: 2, value: c.hum2, status: c.hum2_status}] : [])];
   const displayName = p.nickname ? `${p.nickname} (${p.name})` : p.name;
+  const editButtonHtml = canEditPrinters()
+    ? `<button class="btn btn-sm" onclick="openEditModal('${p.ip}')" 
+                 style="font-size:10px; margin-right:8px; padding:2px 6px;" title="ویرایش اطلاعات و گروه">⚙️</button>`
+    : '';
   const sensorDeleteButtonHtml = canEditPrinters()
     ? `<button class="btn btn-orange" onclick="removePrinter('${p.ip}','${p.name}')" style="font-size:10px">× حذف</button>`
     : '';
@@ -1613,9 +1702,17 @@ async function doAddPrinter() {
   const ip        = document.getElementById('add-ip').value.trim();
   const name      = document.getElementById('add-name').value.trim();
   const community = document.getElementById('add-community-single').value.trim() || 'public';
+  const groupSel  = document.getElementById('add-group-select').value;
+  const groupCust = document.getElementById('add-group-custom').value.trim();
+  const group     = groupCust || groupSel;
+
   if (!ip) { toast('IP الزامی است','e'); return; }
   try {
-    const r = await apiFetch(`${API}/api/printers/add`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ip, name, community})});
+    const r = await apiFetch(`${API}/api/printers/add`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ip, name, community, group})
+    });
     const j = await r.json();
     if (!r.ok) { toast(j.error||'خطا','e'); return; }
     toast(`پرینتر ${ip} اضافه شد`,'s');
@@ -1850,17 +1947,59 @@ async function quickAdd(event, ip, model) {
   }
 }
 
-async function clearLogs(ip) {
+function openClearLogsModal(ip = null) {
   if (!canAdmin()) { toast('دسترسی ندارید', 'e'); return; }
-  if (!confirm('رویدادهای غیر از PRINT، SERVICE و REFILL پاک شوند؟\nاطلاعات PRINT، SERVICE و REFILL حفظ می‌مانند.')) return;
-  const r = await apiFetch(`${API}/api/logs/clear`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(ip?{ip}:{})});
-  if (r.ok) {
-    const j = await r.json();
-    toast(`${j.deleted || 0} رویداد پاک شد — PRINT، SERVICE و REFILL حفظ شد`, 'w');
-    fetchData();
+  document.getElementById('clear-logs-ip').value = ip || '';
+  document.getElementById('modal-clear-logs').classList.add('show');
+}
+
+function closeClearLogsModal() {
+  document.getElementById('modal-clear-logs').classList.remove('show');
+}
+
+async function doClearLogs() {
+  const ip = document.getElementById('clear-logs-ip').value;
+  const checkboxes = document.querySelectorAll('#clear-logs-types input[type="checkbox"]:checked');
+  const selectedTypes = Array.from(checkboxes).map(cb => cb.value);
+
+  if (selectedTypes.length === 0) {
+    toast('حداقل یک نوع رویداد را انتخاب کنید', 'w');
+    return;
+  }
+
+  const confirmMsg = ip 
+    ? `تمامی رویدادهای انتخاب شده برای پرینتر ${ip} حذف شوند؟`
+    : `تمامی رویدادهای انتخاب شده برای "همه پرینترها" حذف شوند؟`;
+
+  if (!confirm(confirmMsg)) return;
+
+  const btn = document.querySelector('[onclick="doClearLogs()"]');
+  btn.disabled = true; btn.textContent = 'در حال حذف...';
+
+  try {
+    const r = await apiFetch(`${API}/api/logs/clear`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ip: ip || null, types: selectedTypes })
+    });
+    
+    if (r.ok) {
+      const j = await r.json();
+      toast(`${fmtN(j.deleted || 0)} رویداد با موفقیت پاک شد`, 's');
+      closeClearLogsModal();
+      fetchData();
+    } else {
+      toast('خطا در پاکسازی لاگ‌ها', 'e');
+    }
+  } catch(e) {
+    toast('خطا در اتصال به سرور', 'e');
+  } finally {
+    btn.disabled = false; btn.textContent = '× حذف انتخاب شده‌ها';
   }
 }
-async function clearPrinterLog(ip) { await clearLogs(ip); }
+
+async function clearLogs() { openClearLogsModal(); }
+async function clearPrinterLog(ip) { openClearLogsModal(ip); }
 
 // ══════════════════════════════════════════════════
 // NICKNAME EDITING
@@ -2178,7 +2317,7 @@ function renderExtraCounterLabel(label) {
 // KEYBOARD SHORTCUTS
 // ══════════════════════════════════════════════════
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape') { closeModal(); closeEvModal(); closeNicknameModal(); }
+  if(e.key==='Escape') { closeModal(); closeEvModal(); closeEditModal(); closeImportModal(); closeClearLogsModal(); }
   if(e.key==='r'&&(e.ctrlKey||e.metaKey)&&!e.shiftKey){ e.preventDefault(); triggerPoll(); }
 });
 document.getElementById('modal-add').addEventListener('click',e=>{ if(e.target===document.getElementById('modal-add')) closeModal(); });
@@ -2624,10 +2763,266 @@ async function loadPrinterDailyChart(ip) {
 // ══════════════════════════════════════════════════
 fetchData();
 resetCountdown();
-bindNicknameModalEvents();
+// bindNicknameModalEvents();
 
 setTimeout(() => {
   if (activeTab === 'overview') {
     loadDailyChart();
   }
 }, 1000);
+// ══════════════════════════════════════════════════
+// PRINTER EDIT MODAL
+// ══════════════════════════════════════════════════
+function openEditModal(ip) {
+  if (!canAdmin()) { toast('دسترسی ندارید', 'e'); return; }
+  const p = allData.find(x => x.ip === ip);
+  if (!p) return;
+
+  const modal = document.getElementById('modal-edit-printer');
+  if (!modal) return;
+
+  document.getElementById('edit-printer-ip').value = ip;
+  document.getElementById('edit-printer-name').value = p.name || '';
+  document.getElementById('edit-printer-nickname').value = p.nickname || '';
+  
+  const groupSelect = document.getElementById('edit-printer-group-select');
+  const customGroupInput = document.getElementById('edit-printer-group-custom');
+  const currentGroup = p.group || getOfficeGroup(p.ip);
+  
+  const groupNames = new Set();
+  OFFICE_GROUPS.forEach(g => groupNames.add(g.id));
+  allData.forEach(item => { if(item.group) groupNames.add(item.group); });
+
+  groupSelect.innerHTML = '<option value="">(بدون گروه)</option>';
+  groupNames.forEach(g => {
+    groupSelect.innerHTML += `<option value="${g}">${g}</option>`;
+  });
+
+  if (Array.from(groupSelect.options).some(opt => opt.value === currentGroup)) {
+    groupSelect.value = currentGroup;
+    customGroupInput.value = '';
+  } else {
+    groupSelect.value = '';
+    customGroupInput.value = currentGroup;
+  }
+
+  modal.classList.add('show');
+}
+
+function closeEditModal() {
+  const modal = document.getElementById('modal-edit-printer');
+  if (modal) modal.classList.remove('show');
+}
+
+async function savePrinterEdit() {
+  const ip = document.getElementById('edit-printer-ip').value;
+  const name = document.getElementById('edit-printer-name').value.trim();
+  const nickname = document.getElementById('edit-printer-nickname').value.trim();
+  const groupSel = document.getElementById('edit-printer-group-select').value;
+  const groupCust = document.getElementById('edit-printer-group-custom').value.trim();
+  const group = groupCust || groupSel;
+
+  try {
+    const r = await apiFetch(`${API}/api/printer/${encodeURIComponent(ip)}/update`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, nickname, group })
+    });
+    if (r.ok) {
+      toast('اطلاعات دستگاه بروزرسانی شد', 's');
+      closeEditModal();
+      fetchData();
+    } else {
+      const j = await r.json();
+      toast(j.error || 'خطا در بروزرسانی', 'e');
+    }
+  } catch(e) {
+    toast('خطا در اتصال', 'e');
+  }
+}
+
+// ══════════════════════════════════════════════════
+// IMPORT DATABASE (.db)
+// ══════════════════════════════════════════════════
+function showImportModal() {
+  if (!canAdmin()) { toast('دسترسی ندارید', 'e'); return; }
+  document.getElementById('import-step-1').style.display = 'block';
+  document.getElementById('import-step-2').style.display = 'none';
+  document.getElementById('import-db-file').value = '';
+  document.getElementById('modal-import-db').classList.add('show');
+}
+
+function closeImportModal() {
+  document.getElementById('modal-import-db').classList.remove('show');
+}
+
+async function analyzeImportFile() {
+  const fileInput = document.getElementById('import-db-file');
+  if (!fileInput.files.length) { toast('لطفاً فایلی انتخاب کنید', 'e'); return; }
+  
+  const formData = new FormData();
+  formData.append('file', fileInput.files[0]);
+  
+  const btn = document.querySelector('[onclick="analyzeImportFile()"]');
+  btn.disabled = true; btn.textContent = 'در حال تحلیل...';
+  
+  try {
+    const res = await apiFetch(`${API}/api/import/analyze`, {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'خطا در تحلیل فایل');
+    
+    const s = data.summary;
+    document.getElementById('import-count-logs').textContent = fmtN(s.logs_count || 0);
+    const range = s.logs_range || {};
+    document.getElementById('import-range-logs').textContent = range.start ? `${range.start.slice(0,10)} تا ${range.end.slice(0,10)}` : '—';
+    
+    // لیست پرینترها
+    const pList = document.getElementById('import-printer-list');
+    pList.innerHTML = (s.printers_in_logs || []).map(p => `
+      <label style="display:flex; align-items:center; gap:8px; margin-bottom:4px; font-size:11px; cursor:pointer">
+        <input type="checkbox" name="import-ips" value="${p.ip}" checked>
+        ${p.name || p.ip} (${p.ip})
+      </label>
+    `).join('');
+    
+    document.getElementById('import-step-1').style.display = 'none';
+    document.getElementById('import-step-2').style.display = 'block';
+    
+  } catch (err) {
+    toast(err.message, 'e');
+  } finally {
+    btn.disabled = false; btn.textContent = 'تحلیل فایل...';
+  }
+}
+
+async function confirmImport() {
+  const selectedIps = Array.from(document.querySelectorAll('input[name="import-ips"]:checked')).map(cb => cb.value);
+  const startDate = document.getElementById('import-filter-start').value;
+  const endDate = document.getElementById('import-filter-end').value;
+  
+  if (selectedIps.length === 0) { toast('حداقل یک پرینتر را انتخاب کنید', 'e'); return; }
+  
+  const btn = document.querySelector('[onclick="confirmImport()"]');
+  btn.disabled = true; btn.textContent = 'در حال بارگذاری...';
+  
+  try {
+    const res = await apiFetch(`${API}/api/import/confirm`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        filters: {
+          ips: selectedIps,
+          start_date: startDate ? startDate + 'T00:00:00' : null,
+          end_date: endDate ? endDate + 'T23:59:59' : null
+        }
+      })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'خطا در بارگذاری');
+    
+    toast(`${fmtN(data.imported)} لاگ با موفقیت وارد شد`, 's');
+    closeImportModal();
+    fetchData(); // بروزرسانی لیست لاگ‌ها
+  } catch (err) {
+    toast(err.message, 'e');
+  } finally {
+    btn.disabled = false; btn.textContent = 'تایید و بارگذاری دیتا';
+  }
+}
+
+// ══════════════════════════════════════════════════
+// GROUP MANAGER LOGIC
+// ══════════════════════════════════════════════════
+function addNewGroupToSystem() {
+  const name = document.getElementById('new-group-name').value.trim();
+  if (!name) { toast('نام گروه را وارد کنید', 'e'); return; }
+  
+  // برای ایجاد گروه، نیازی به API جدا نیست، کافیست در لیست دراپ‌داون‌ها ظاهر شود
+  // این کار با اضافه کردن به یک پرینتر فرضی یا فقط نگه داشتن در حافظه انجام می‌شود
+  // اما ساده‌ترین راه این است که کاربر نام را وارد کند و ما آن را در لیست انتخاب‌ها نشان دهیم.
+  
+  toast(`گروه "${name}" آماده تخصیص است`, 's');
+  document.getElementById('new-group-name').value = '';
+  renderGroupManagerList();
+}
+
+function renderGroupManagerList() {
+  const container = document.getElementById('group-manager-list');
+  const filter = document.getElementById('group-mgr-filter').value.toLowerCase();
+  if (!container) return;
+
+  // استخراج تمام گروه‌های موجود برای استفاده در دراپ‌داون هر ردیف
+  const allGroupNames = new Set();
+  OFFICE_GROUPS.forEach(g => allGroupNames.add(g.name));
+  allData.forEach(p => { if(p.group) allGroupNames.add(p.group); });
+
+  const filteredPrinters = allData.filter(p => 
+    p.ip.toLowerCase().includes(filter) || 
+    (p.name || '').toLowerCase().includes(filter) ||
+    (p.nickname || '').toLowerCase().includes(filter)
+  );
+
+  if (filteredPrinters.length === 0) {
+    container.innerHTML = '<div style="padding:20px; text-align:center; color:var(--text3)">پرینتری یافت نشد</div>';
+    return;
+  }
+
+  container.innerHTML = filteredPrinters.map(p => {
+    const currentGroup = p.group || '';
+    const options = Array.from(allGroupNames).map(gName => 
+      `<option value="${gName}" ${currentGroup === gName ? 'selected' : ''}>${gName}</option>`
+    ).join('');
+
+    return `
+      <div style="display:flex; align-items:center; gap:10px; padding:8px; border-bottom:1px solid var(--border); background:var(--bg2); margin-bottom:4px; border-radius:6px">
+        <div style="flex:1; min-width:0">
+          <div style="font-size:12px; font-weight:700; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap">${p.nickname || p.name}</div>
+          <div style="font-family:var(--mono); font-size:10px; color:var(--cyan)">${p.ip}</div>
+        </div>
+        <select onchange="updatePrinterGroupDirectly('${p.ip}', this.value)" style="padding:4px 8px; font-size:11px; border-radius:4px; border:1px solid var(--border); background:var(--bg3); color:var(--text); width:140px">
+          <option value="">(بدون گروه)</option>
+          ${options}
+        </select>
+      </div>
+    `;
+  }).join('');
+}
+
+async function updatePrinterGroupDirectly(ip, newGroup) {
+  try {
+    const r = await apiFetch(`${API}/api/printer/${encodeURIComponent(ip)}/update`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ group: newGroup })
+    });
+    if (r.ok) {
+      toast('گروه بروزرسانی شد', 's');
+      // بروزرسانی داده‌های محلی بدون رفرش کامل اگر ممکن باشد
+      const p = allData.find(x => x.ip === ip);
+      if (p) p.group = newGroup;
+      rebuildTabs(allData); // سایدبار بروز شود
+    } else {
+      toast('خطا در بروزرسانی', 'e');
+    }
+  } catch(e) {
+    toast('خطا در اتصال', 'e');
+  }
+}
+
+// اضافه کردن فراخوانی رندر لیست هنگام باز شدن تب گروه‌ها
+const originalSwitchAddTab = switchAddTab;
+switchAddTab = function(name, el) {
+  originalSwitchAddTab(name, el);
+  if (name === 'groups') {
+    renderGroupManagerList();
+  }
+};
+
+if (document.getElementById('modal-clear-logs')) {
+  document.getElementById('modal-clear-logs').onclick = (e) => {
+    if (e.target.id === 'modal-clear-logs') closeClearLogsModal();
+  };
+}

@@ -31,170 +31,167 @@
   --scrollbar-cl: var(--border);
 }
 
-/* ─── تم لایت ─── */
+/* ─── تم لایت (اصلاح شده برای زیبایی و تنوع بصری) ─── */
 html.light {
-  --bg:       #ffffff;
-  --bg2:      #00587a;
-  --bg3:      #19587a;
-  --bg4:      #18557699;
-  --border:   #b7c9f5;
-  --bdr2:     #8fa9ee;
-  --text:     #ffffff;
-  --text2:    #ffffff;
-  --text3:    #ffffff;
-  --bg-d:     #ff4f89;
-  --topbar-bg:rgb(0, 88, 122);
-  --card-shadow:  rgba(0,0,0,.1);
-  --overlay-bg:   rgba(0,0,0,.4);
-  --scanline:     rgba(0,0,0,0.02);
-  --grid-line:    rgba(0,88,122,.05);
-  --chart-grid:   rgba(183, 201, 245, 0.5);
-  --chart-text:   #ffffff;
-  --scrollbar-cl: #b7c9f5;
-  --red:    #ff3d3d;
+  --bg:       #f0f4f8;  /* پس‌زمینه متمایل به آبی ملایم */
+  --bg2:      #ffffff;  
+  --bg3:      #d1dce5;  
+  --bg4:      #f8fafc;  
+  --border:   #cbd5e1;  
+  --bdr2:     #00d4ff;  
+  --text:     #0f172a;  
+  --text2:    #334155;  
+  --text3:    #64748b;  
+  --cyan:     #0086a7;  
+  --bg-d:     #eef2f7;
+  --topbar-bg: rgb(0, 88, 122); /* تاپ‌بار همیشه تیره بماند */
+  --card-shadow:  0 10px 25px rgba(0, 88, 122, 0.08); 
+  --overlay-bg:   rgba(15, 23, 42, 0.6);
+  --scanline:     rgba(0,0,0,.01);
+  --grid-line:    rgba(0, 212, 255, 0.04);
+  --chart-grid:   rgba(0, 0, 0, 0.08);
+  --chart-text:   #1e293b;
+  --scrollbar-cl: #94a3b8;
+  --red:    #dc2626;
+  --dark-teal: rgb(0, 88, 122); /* رنگ درخواستی */
 }
 
-/* ─── اصلاح scanline و grid برای تم لایت ─── */
-html.light body::after {
-  background: repeating-linear-gradient(
-    0deg, transparent, transparent 2px,
-    var(--scanline) 2px, var(--scanline) 4px
-  );
+/* ─── اصلاح بنر سنسور در تم لایت ─── */
+html.light .overview-card.sensor-banner {
+  background: linear-gradient(135deg, var(--dark-teal), #004d61) !important;
+  border: 1px solid rgba(0, 212, 255, 0.3) !important;
+  border-top: 3px solid var(--orange) !important;
+  box-shadow: 0 8px 30px rgba(0, 88, 122, 0.2) !important;
 }
-html.light body::before {
-  background-image:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 15px 15px;
+html.light .overview-card.sensor-banner .oc-name,
+html.light .overview-card.sensor-banner .sensor-tile-label,
+html.light .overview-card.sensor-banner .oc-model {
+  color: #e2e8f0 !important; /* متن روشن روی پس‌زمینه تیره */
+}
+html.light .overview-card.sensor-banner .sensor-tile {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+html.light .overview-card.sensor-banner .oc-ip {
+  color: #00d4ff !important;
 }
 
-/* ─── لغو scanline تم لایت (اختیاری - برای ظاهر تمیزتر) ─── */
-html.light body::after {
-  opacity: 0.3;
+/* ─── تنوع بخشیدن به باکس‌ها (استفاده از Dark Teal) ─── */
+html.light .stats-card-header {
+  background: var(--dark-teal) !important;
+  border-bottom: 2px solid #00d4ff !important;
+}
+html.light .stats-card-header .stats-title,
+html.light .stats-card-header .stats-icon {
+  color: #ffffff !important;
+}
+html.light .stats-card-header .stats-badge {
+  background: rgba(0, 212, 255, 0.2) !important;
+  color: #ffffff !important;
+  border-color: rgba(0, 212, 255, 0.4) !important;
 }
 
-/* ─── دکمه تغییر تم ─── */
-.theme-toggle {
-  position: relative;
-  width: 44px;
-  height: 24px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  background: var(--bg3);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  padding: 0 3px;
+html.light .sidebar {
+  background: #ffffff;
+  border-left: 1px solid #e2e8f0;
 }
-.theme-toggle:hover {
-  border-color: var(--cyan);
+
+html.light .sb-overview.active {
+  background: var(--dark-teal) !important;
+  color: #ffffff !important;
+  border-color: #00d4ff !important;
 }
-.theme-toggle-knob {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--cyan);
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  box-shadow: 0 0 6px rgba(0,212,255,0.4);
+html.light .sb-overview.active .sb-ov-label {
+  color: #ffffff !important;
 }
-/* حالت دارک: ماه در سمت راست (RTL) */
-.theme-toggle-knob::after {
-  content: '🌙';
+
+html.light .topbar-dropdown-user {
+  background: var(--dark-teal) !important;
+  border-bottom: 2px solid #00d4ff !important;
+}
+html.light .topbar-dropdown-user .user-name {
+  color: #ffffff !important;
+}
+html.light .topbar-dropdown-user .user-role {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* ─── استفاده از رنگ سایان شاخص ─── */
+html.light .section-title {
+  color: var(--dark-teal);
+  border-right: 4px solid #00d4ff;
+  padding-right: 10px;
   font-size: 11px;
 }
-/* حالت لایت: خورشید در سمت چپ (RTL) */
-html.light .theme-toggle-knob {
-  transform: translateX(-20px);
-  background: #ffc107;
-  box-shadow: 0 0 6px rgba(255,193,7,0.5);
-}
-html.light .theme-toggle-knob::after {
-  content: '☀️';
-}
-html.light .theme-toggle {
-  background: #e3edf7;
-  border-color: #8fa9ee;
+html.light .oc-pill.pill-on {
+  background: rgba(0, 230, 118, 0.1);
+  color: #16a34a;
+  border-color: rgba(0, 230, 118, 0.3);
 }
 
-/* ─── اصلاح برخی المان‌ها برای تم لایت ─── */
-html.light .overview-card:hover {
-  box-shadow: 0 6px 30px rgba(0,0,0,.12);
-}
-html.light .topbar {
-  background: var(--topbar-bg);
-}
-html.light .sidebar {
-  background: var(--bg2);
-}
-html.light .dark {
-  background-color: var(--bg-d);
-}
-html.light .section {
-  background: var(--bg2);
-  border-color: var(--border);
-}
-html.light .overview-card {
-  background: var(--bg2);
-  border-color: var(--border);
-}
-
-/* ─── اصلاح رنگ متن‌ها در تم لایت ─── */
-html.light .sb-group-name {
-  color: var(--text2);
-}
-html.light .sb-group.open .sb-group-name {
-  color: var(--text);
-}
-html.light .oc-name {
-  color: var(--text2);
-}
-html.light .section-title {
-  color: var(--text3);
-}
-html.light .toner-stat-val {
-  color: var(--text2);
-}
-html.light .pg-info {
-  color: var(--text3);
-}
-html.light .form-input {
-  background: var(--bg3);
-  border-color: var(--border);
-  color: var(--text2);
-}
-html.light .bulk-textarea {
-  background: var(--bg3);
-  border-color: var(--border);
-  color: var(--text2);
-}
-html.light #toast {
-  background: #e8eef5;
-  border-color: var(--bdr2);
-  color: var(--text);
-}
-html.light .modal-content,
-html.light .ev-modal {
-  background: var(--bg2);
-  border-color: var(--bdr2);
-}
-
-/* ─── دکمه‌ها در تم لایت ─── */
+/* ─── دکمه‌های مودال ─── */
 html.light .btn-cyan {
-  background: rgba(0,212,255,.15);
-  border-color: rgba(0,212,255,.4);
+  background: #00d4ff !important;
+  color: #fff !important;
+  border-color: #00d4ff !important;
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.25);
 }
-html.light .btn-green {
-  background: rgba(0,230,118,.15);
-  border-color: rgba(0,230,118,.4);
+html.light .btn-cyan:hover {
+  background: #00b8d4 !important;
+  transform: translateY(-1px);
 }
-html.light .btn-orange {
-  background: rgba(255,112,67,.15);
-  border-color: rgba(255,112,67,.4);
+
+/* اصلاح رنگ تاپ‌بار برای هماهنگی با هر دو تم */
+.topbar-meta, .topbar-actions span {
+  color: #ffffff !important; /* در هر دو حالت تاپ‌بار تیره می‌ماند پس متن سفید باشد */
+}
+html.light .auth-hero, 
+html.light .auth-card,
+html.light .users-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: var(--border);
+  box-shadow: 0 15px 45px rgba(0,0,0,0.08);
+}
+html.light .auth-hero h1,
+html.light .auth-card h2,
+html.light .users-header h1 {
+  color: var(--text);
+}
+html.light .auth-points {
+  color: #e4e8f0;
+}
+html.light .users-table th {
+  background: #f1f5f9;
+  color: #008ba3;
+}
+html.light .users-table td {
+  color: #e4e8f0;
+  border-bottom-color: #f1f3f5;
+}
+html.light .users-choice-item {
+  background: #ffffff;
+}
+html.light .users-primary-text {
+  color: var(--text);
+}
+html.light .sb-ov-badge {
+  background: #f1f3f5;
+  color: #e4e8f0;
+  border-color: var(--border);
+}
+html.light .topbar-dropdown-divider {
+  background: #f1f3f5;
+}
+
+/* دکمه‌های داخل تاپ‌بار همیشه باید استایل روشن داشته باشند چون تاپ‌بار تیره است */
+.topbar .btn-cyan {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: #fff !important;
+}
+.topbar .btn-cyan:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: #fff !important;
 }
 
 /* ─── اسکرولبار تم لایت ─── */
@@ -213,7 +210,8 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 /* ── TOPBAR ────────────────────────────────────────── */
 .topbar{position:sticky;top:0;z-index:200;display:flex;align-items:center;gap:12px;padding:0 20px;height:52px;background:rgb(0, 88, 122);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);flex-wrap:wrap}
 .logo{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--cyan);letter-spacing:1.5px;white-space:nowrap}
-.logo span{color:var(--text3);font-weight:400}
+.logo span{color:#ffffff;font-weight:400}
+.v2-badge { font-size: 9px; color: rgba(255,255,255,0.7) !important; vertical-align: middle; margin-right: 4px; }
 .topbar-meta{display:flex;gap:16px;font-family:var(--mono);font-size:11px;color:var(--text3);margin-right:auto}
 .meta-chip{display:flex;align-items:center;gap:5px}
 .meta-val{font-weight:700;font-size:13px}
@@ -949,7 +947,21 @@ html.light .offline-message { color: #000000; }
   outline: none;
 }
 
-/* ── نشانگر آنلاین/آفلاین در هدر گروه (دایره‌ای) ── */
+.sb-group.active-group .sb-group-hdr {
+  background: rgba(0, 212, 255, 0.1);
+  border-right: 4px solid #00d4ff;
+}
+html.light .sb-group.active-group .sb-group-hdr {
+  background: rgba(0, 88, 122, 0.1);
+  border-right-color: var(--dark-teal);
+}
+.sb-group.active-group .sb-group-name {
+  color: var(--cyan);
+  font-weight: 800;
+}
+html.light .sb-group.active-group .sb-group-name {
+  color: var(--dark-teal);
+}
 .sb-meta-group {
   display: flex;
   gap: 8px;
@@ -980,83 +992,201 @@ html.light .offline-message { color: #000000; }
   color: var(--text3);
 }
 
-/* ── منوی کشویی هدر ── */
+/* ─── دراپ‌داون‌های عمومی (برای خروجی‌ها و غیره) ─── */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  bottom: 100%; /* باز شدن به سمت بالا برای تولبار پایین */
+  right: 0;
+  margin-bottom: 8px;
+  min-width: 180px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  z-index: 100;
+  overflow: hidden;
+}
+.dropdown.open .dropdown-menu {
+  display: block;
+  animation: dropdownFadeUp 0.2s ease;
+}
+@keyframes dropdownFadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 14px;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 12px;
+  text-align: right;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.dropdown-item:hover {
+  background: var(--bg3);
+}
+html.light .dropdown-menu {
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  background: #ffffff;
+}
+html.light .dropdown-item:hover {
+  background: #f1f5f9;
+}
+
+.log-toolbar .dropdown-menu {
+  bottom: 100%; /* پیش‌فرض باز شدن به سمت بالا */
+  top: auto;
+}
+
+/* ─── استایل دکمه‌های آیکون‌دار در تاپ‌بار ─── */
 .topbar-more {
   position: relative;
 }
-.topbar-more-btn {
-  padding: 4px 10px !important;
-  font-size: 16px !important;
-  font-weight: 700 !important;
-  letter-spacing: 1px;
-  line-height: 1;
-  border-radius: 8px !important;
-  transition: all .2s;
+.btn-icon {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  cursor: pointer;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
 }
-.topbar-more-btn:hover {
-  background: var(--bg3) !important;
-  border-color: var(--cyan) !important;
-  color: var(--cyan) !important;
+.btn-icon:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+.btn-icon svg {
+  width: 18px;
+  height: 18px;
 }
 .topbar-dropdown {
   display: none;
   position: absolute;
-  top: 100%;
+  top: calc(100% + 10px);
   left: 0;
-  margin-top: 4px;
-  min-width: 180px;
+  width: 240px;
   background: var(--bg2);
-  border: 1px solid var(--bdr2);
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0,0,0,.3);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
   overflow: hidden;
   z-index: 300;
-  animation: dropdownIn 0.15s ease;
+  animation: dropdownIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+html.light .topbar-dropdown {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 .topbar-more.open .topbar-dropdown {
   display: block;
 }
 @keyframes dropdownIn {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(-10px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
-.topbar-dropdown-header {
-  padding: 10px 14px;
-  font-family: var(--mono);
-  font-size: 11px;
+.topbar-dropdown-user {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg3);
+}
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  background: var(--cyan);
+  color: #fff;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 700;
-  color: var(--cyan);
-  border-bottom: 1px solid var(--border);
+  font-size: 18px;
+  box-shadow: 0 4px 10px rgba(0,212,255,0.3);
+}
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+.user-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+.user-role {
+  font-size: 11px;
+  color: #e4e8f0;
 }
 .topbar-dropdown-divider {
   height: 1px;
   background: var(--border);
 }
+.topbar-dropdown-group {
+  padding: 6px;
+}
 .topbar-dropdown-item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   width: 100%;
-  padding: 8px 14px;
+  padding: 10px 12px;
   background: none;
   border: none;
-  color: var(--text2);
+  border-radius: 10px;
+  color: #e4e8f0;
   font-family: var(--sans);
-  font-size: 12px;
+  font-size: 13px;
   cursor: pointer;
-  transition: all .15s;
+  transition: all 0.2s;
   text-align: right;
   text-decoration: none;
 }
 .topbar-dropdown-item:hover {
-  background: var(--bg3);
+  background: var(--bg4);
   color: var(--text);
+  transform: translateX(-4px);
+}
+html.light .topbar-dropdown-item {
+  color: #1e293b;
+}
+html.light .topbar-dropdown-item:hover {
+  background: rgba(0, 212, 255, 0.1);
+  color: var(--dark-teal);
+}
+.item-icon {
+  font-size: 16px;
+  width: 20px;
+  display: flex;
+  justify-content: center;
 }
 .topbar-dropdown-danger {
   color: var(--red);
 }
 .topbar-dropdown-danger:hover {
-  background: rgba(255,61,61,.1);
+  background: rgba(255,61,61,0.08);
+  color: var(--red);
+}
+html.light .topbar-dropdown-user {
+  background: #f8f9fa;
+}
+html.light .topbar-dropdown-item:hover {
+  background: #f1f3f5;
 }
 .sensor-card {
   text-align: center;
@@ -1095,7 +1225,7 @@ html.light .offline-message { color: #000000; }
   font-family: var(--mono);
   font-size: 13px;
   font-weight: 500;
-  color: var(--text2);
+  color: #e4e8f0;
 }
 .sensor-status {
   font-size: 11px;
@@ -1222,7 +1352,7 @@ html.light .offline-message { color: #000000; }
   line-height: 1.2;
 }
 .auth-hero p, .auth-note {
-  color: var(--text2);
+  color: #e4e8f0;
   margin: 0;
   line-height: 1.9;
 }
@@ -1249,7 +1379,7 @@ html.light .offline-message { color: #000000; }
 }
 .auth-form label {
   font-size: 12px;
-  color: var(--text2);
+  color: #e4e8f0;
 }
 .auth-check {
   display: flex !important;
@@ -1336,7 +1466,7 @@ html.light .offline-message { color: #000000; }
 }
 .users-header p {
   margin: 8px 0 0;
-  color: var(--text2);
+  color: #e4e8f0;
   line-height: 1.9;
 }
 .users-header-actions {
@@ -1364,7 +1494,7 @@ html.light .offline-message { color: #000000; }
 .users-status {
   font-family: var(--mono);
   font-size: 11px;
-  color: var(--text2);
+  color: #e4e8f0;
 }
 .users-status.success { color: var(--green); }
 .users-status.error { color: var(--red); }
@@ -1384,7 +1514,7 @@ html.light .offline-message { color: #000000; }
 }
 .users-modal-hint {
   margin: 6px 0 0;
-  color: var(--text2);
+  color: #e4e8f0;
   font-family: var(--mono);
   font-size: 11px;
   line-height: 1.8;
@@ -1405,7 +1535,7 @@ html.light .offline-message { color: #000000; }
 .users-optional {
   font-family: var(--mono);
   font-size: 10px;
-  color: var(--text2);
+  color: #e4e8f0;
 }
 .users-field-error {
   min-height: 16px;
@@ -1512,7 +1642,7 @@ html.light .offline-message { color: #000000; }
 }
 .users-empty-cell {
   text-align: center;
-  color: var(--text2);
+  color: #e4e8f0;
   padding: 24px !important;
 }
 .users-error-text {
@@ -1528,7 +1658,7 @@ html.light .offline-message { color: #000000; }
   font-weight: 700;
 }
 .users-secondary-text {
-  color: var(--text2);
+  color: #e4e8f0;
   font-size: 11px;
   font-family: var(--mono);
 }
@@ -1540,7 +1670,7 @@ html.light .offline-message { color: #000000; }
   gap: 6px;
   font-size: 11px;
   line-height: 1.7;
-  color: var(--text2);
+  color: #e4e8f0;
 }
 .users-row-actions {
   display: flex;
@@ -1855,13 +1985,29 @@ html.light .oc-counter-label {
 html.light .oc-counter-val {
   color: #0f172a;
 }
-html.light .cartridge-card {
+html.light .supply-card {
+  border-top: 2px solid #00d4ff;
   background: #ffffff;
+}
+html.light .supply-card:hover {
+  border-color: #00d4ff;
+  box-shadow: 0 5px 15px rgba(0, 212, 255, 0.15);
+}
+html.light .supply-card-name {
+  color: #1e293b;
+}
+html.light .supply-card-level {
+  color: #0086a7;
+}
+html.light .supply-stat {
+  background: #f8fafc;
   border-color: #e2e8f0;
 }
-html.light .cartridge-card:hover {
-  border-color: #0284c7;
-  background: #f0f9ff;
+html.light .supply-stat-lbl {
+  color: #64748b;
+}
+html.light .supply-stat-val {
+  color: #1e293b;
 }
 html.light .toner-card {
   background: #ffffff;

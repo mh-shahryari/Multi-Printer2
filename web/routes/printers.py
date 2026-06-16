@@ -252,15 +252,17 @@ def api_add():
     name = (body.get("name") or f"Printer {ip}").strip()
     community = (body.get("community") or "public").strip()
     nickname = (body.get("nickname") or "").strip()
+    group = (body.get("group") or "").strip()
     if not ip:
         return jsonify({"error": "IP required"}), 400
     with store.printers_lock:
         if any(p["ip"] == ip for p in store.PRINTERS):
             return jsonify({"error": "already exists"}), 409
-        store.PRINTERS.append({"ip": ip, "name": name, "community": community, "nickname": nickname})
+        new_p = {"ip": ip, "name": name, "community": community, "nickname": nickname, "group": group}
+        store.PRINTERS.append(new_p)
         store.save_printers(store.PRINTERS)
     threading.Thread(
-        target=lambda: poll_one({"ip": ip, "name": name, "community": community, "nickname": nickname}),
+        target=lambda: poll_one(new_p),
         daemon=True
     ).start()
     return jsonify({"status": "added", "ip": ip, "name": name})
@@ -392,20 +394,41 @@ def api_auto_add_printer():
         return jsonify({"error": str(e)}), 500
 
 
-@bp.route('/api/printer/<path:ip>/rename', methods=['POST'])
-def rename_printer(ip):
+@bp.route('/api/printer/<path:ip>/update', methods=['POST'])
+def api_update_printer(ip):
+    if not user_can_access_office(current_user, ip):
+        return jsonify({"error": "forbidden"}), 403
+        
     data = request.get_json() or {}
+    new_name = data.get("name", "").strip()
     new_nickname = data.get("nickname", "").strip()
+    new_group = data.get("group", "").strip()
+    
     with store.printers_lock:
+        found = False
         for p in store.PRINTERS:
             if p["ip"] == ip:
+                if new_name:
+                    p["name"] = new_name
                 p["nickname"] = new_nickname
-                store.save_printers(store.PRINTERS)
-                with store.data_lock:
-                    if ip in store.printer_data:
-                        store.printer_data[ip]["nickname"] = new_nickname
-                return jsonify({"status": "ok", "nickname": new_nickname})
-    return jsonify({"error": "printer not found"}), 404
+                p["group"] = new_group
+                found = True
+                break
+        
+        if not found:
+            return jsonify({"error": "printer not found"}), 404
+            
+        store.save_printers(store.PRINTERS)
+        
+    # به‌روزرسانی داده‌های لحظه‌ای در حافظه
+    with store.data_lock:
+        if ip in store.printer_data:
+            if new_name:
+                store.printer_data[ip]["name"] = new_name
+            store.printer_data[ip]["nickname"] = new_nickname
+            store.printer_data[ip]["group"] = new_group
+            
+    return jsonify({"status": "ok", "ip": ip})
 
 
 @bp.route('/api/printer/<path:ip>/toner_reset', methods=['POST'])
