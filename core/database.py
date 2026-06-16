@@ -701,33 +701,48 @@ def get_all_logs(start=None, end=None, limit: int = 1000, ip=None, ips=None) -> 
         return []
 
 
-def clear_logs(ip=None, ips=None) -> int:
+def clear_logs(ip=None, ips=None, types=None) -> int:
     """
-    پاک کردن رویدادهای غیر از PRINT، SERVICE و REFILL.
-    رویدادهای PRINT، SERVICE و REFILL هرگز پاک نمی‌شوند.
+    پاک کردن رویدادها.
+    اگر types مشخص شده باشد، فقط همان نوع‌ها پاک می‌شوند.
+    در غیر این صورت، رویدادهای غیر از PRINT، SERVICE و REFILL پاک می‌شوند.
     """
-    keep_types = ('PRINT', 'SERVICE', 'REFILL')
     try:
-        type_placeholders = ','.join(['?'] * len(keep_types))
+        params = []
+        where_clauses = []
+
         if ips:
             ips = [str(item).strip() for item in ips if str(item).strip()]
             if not ips:
                 return 0
             ip_placeholders = ','.join(['?'] * len(ips))
-            sql = (f"DELETE FROM logs WHERE printer_ip IN ({ip_placeholders}) "
-                   f"AND type NOT IN ({type_placeholders})")
-            params = tuple(ips) + keep_types
+            where_clauses.append(f"printer_ip IN ({ip_placeholders})")
+            params.extend(ips)
         elif ip:
-            sql = f"DELETE FROM logs WHERE printer_ip = ? AND type NOT IN ({type_placeholders})"
-            params = (ip,) + keep_types
+            where_clauses.append("printer_ip = ?")
+            params.append(ip)
+
+        if types:
+            # اگر نوع‌های خاصی انتخاب شده باشند، دقیقاً همان‌ها را پاک کن
+            type_placeholders = ','.join(['?'] * len(types))
+            where_clauses.append(f"type IN ({type_placeholders})")
+            params.extend(types)
         else:
-            sql = f"DELETE FROM logs WHERE type NOT IN ({type_placeholders})"
-            params = keep_types
+            # رفتار قبلی: پاک کردن همه به جز موارد حیاتی
+            keep_types = ('PRINT', 'SERVICE', 'REFILL')
+            type_placeholders = ','.join(['?'] * len(keep_types))
+            where_clauses.append(f"type NOT IN ({type_placeholders})")
+            params.extend(keep_types)
+
+        sql = "DELETE FROM logs"
+        if where_clauses:
+            sql += " WHERE " + " AND ".join(where_clauses)
 
         with db_connection(commit=True) as conn:
             cur = conn.execute(sql, params)
             deleted = cur.rowcount
-        log.info(f"clear_logs: {deleted} رویداد پاک شد (PRINT, SERVICE, REFILL حفظ شد)")
+        
+        log.info(f"clear_logs: {deleted} رویداد پاک شد. فیلتر نوع: {types if types else 'auto'}")
         return deleted
     except Exception as e:
         log.exception(f"Error clearing logs: {e}")

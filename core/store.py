@@ -173,7 +173,7 @@ class PrevStore:
 _prev = PrevStore()
 
 # ─── فیلدهای مجاز در printers.json ─────────────────────────────
-_PRINTER_ALLOWED_FIELDS = {"ip", "name", "community", "brand", "nickname", "device_type"}
+_PRINTER_ALLOWED_FIELDS = {"ip", "name", "community", "brand", "nickname", "device_type", "group"}
 
 
 def _normalize_printer(p: dict) -> dict:
@@ -183,6 +183,7 @@ def _normalize_printer(p: dict) -> dict:
         "community": str(p.get("community", "public")).strip() or "public",
         "nickname": str(p.get("nickname", "")).strip(),
         "device_type": str(p.get("device_type", "")).strip() or "unknown",
+        "group": str(p.get("group", "")).strip(),
         **({"brand": str(p["brand"]).strip().lower()}
            if p.get("brand") and p.get("brand") not in ("", "unknown") else {}),
     }

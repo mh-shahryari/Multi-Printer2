@@ -1,10 +1,163 @@
 {
+  "172.16.24.62": {
+    "ip": "172.16.24.62",
+    "brand": "canon",
+    "device_type": "mono",
+    "scanned_at": "2026-06-16T08:32:14.102858",
+    "scan_ms": 311,
+    "oid_total": 16,
+    "oid_active": 8,
+    "oid_inactive": 2,
+    "oid_rejected": 2,
+    "oids": {
+      "sys_descr": {
+        "oid": "1.3.6.1.2.1.1.1.0",
+        "type": "str",
+        "category": "sys",
+        "description": "sys_descr",
+        "unit": "str",
+        "active": true,
+        "last_value": "Canon MF210 Series /P"
+      },
+      "sys_uptime": {
+        "oid": "1.3.6.1.2.1.1.3.0",
+        "type": "int",
+        "category": "sys",
+        "description": "sys_uptime",
+        "unit": "str",
+        "active": true,
+        "last_value": "25101874"
+      },
+      "sys_hostname": {
+        "oid": "1.3.6.1.2.1.1.5.0",
+        "type": "str",
+        "category": "sys",
+        "description": "sys_hostname",
+        "unit": "str",
+        "active": true,
+        "last_value": "MF210 - Monshi119"
+      },
+      "print_total": {
+        "oid": "1.3.6.1.2.1.43.10.2.1.4.1.1",
+        "type": "int",
+        "category": "counter",
+        "active": true,
+        "last_value": "140270"
+      },
+      "print_color": {
+        "oid": "1.3.6.1.2.1.43.10.2.1.4.1.2",
+        "active": false
+      },
+      "print_mono": {
+        "oid": "1.3.6.1.2.1.43.10.2.1.4.1.3",
+        "active": false
+      },
+      "prt_marker_total": {
+        "oid": "1.3.6.1.4.1.1602.1.11.2.1.1.3.1",
+        "type": "int",
+        "category": "counter",
+        "active": true,
+        "last_value": "140270"
+      },
+      "toner_name_1": {
+        "oid": "1.3.6.1.2.1.43.11.1.1.6.1.1",
+        "type": "str",
+        "category": "identity",
+        "active": true,
+        "last_value": "Cartridge 737"
+      },
+      "toner_remain_1": {
+        "oid": "1.3.6.1.2.1.43.11.1.1.9.1.1",
+        "type": "int",
+        "category": "supply",
+        "active": true,
+        "last_value": "5"
+      },
+      "toner_max_1": {
+        "oid": "1.3.6.1.2.1.43.11.1.1.8.1.1",
+        "type": "int",
+        "category": "supply",
+        "active": true,
+        "last_value": "100"
+      },
+      "tray1_name": {
+        "oid": "1.3.6.1.2.1.43.8.2.1.13.1.1",
+        "type": "str",
+        "category": "identity",
+        "active": true,
+        "last_value": "Stack Bypass"
+      },
+      "tray1_cap": {
+        "oid": "1.3.6.1.2.1.43.8.2.1.9.1.1",
+        "type": "int",
+        "category": "tray",
+        "active": true,
+        "last_value": "1"
+      },
+      "tray1_level": {
+        "oid": "1.3.6.1.2.1.43.8.2.1.10.1.1",
+        "type": "int",
+        "category": "tray",
+        "active": true,
+        "last_value": "0"
+      },
+      "tray2_name": {
+        "oid": "1.3.6.1.2.1.43.8.2.1.13.1.2",
+        "type": "str",
+        "category": "identity",
+        "active": true,
+        "last_value": "Drawer1"
+      },
+      "tray2_cap": {
+        "oid": "1.3.6.1.2.1.43.8.2.1.9.1.2",
+        "type": "int",
+        "category": "tray",
+        "active": true,
+        "last_value": "250"
+      },
+      "tray2_level": {
+        "oid": "1.3.6.1.2.1.43.8.2.1.10.1.2",
+        "type": "int",
+        "category": "tray",
+        "active": true,
+        "last_value": "-3"
+      }
+    },
+    "current_vals": {
+      "sys_descr": "Canon MF210 Series /P",
+      "sys_uptime": "25101874",
+      "sys_hostname": "MF210 - Monshi119",
+      "print_total": "140270",
+      "prt_marker_total": "140270",
+      "toner_name_1": "Cartridge 737",
+      "toner_remain_1": "5",
+      "toner_max_1": "100",
+      "tray1_name": "Stack Bypass",
+      "tray1_cap": "1",
+      "tray1_level": "0",
+      "tray2_name": "Drawer1",
+      "tray2_cap": "250",
+      "tray2_level": "-3"
+    },
+    "rejected_oids": {
+      "print_color": "1.3.6.1.2.1.43.10.2.1.4.1.2",
+      "print_mono": "1.3.6.1.2.1.43.10.2.1.4.1.3"
+    },
+    "summary": {
+      "model": "Canon MF210 Series",
+      "serial": "RWB64497",
+      "brand": "canon",
+      "total_pages": 140270,
+      "toner_pct": null,
+      "device_type": "mono"
+    }
+  },
   "172.16.24.61": {
     "ip": "172.16.24.61",
     "brand": "mfp11917633",
     "device_type": "color",
-    "scanned_at": "2026-06-15T14:20:57.462143",
-    "scan_ms": 623,
+    "scanned_at": "2026-06-16T08:32:14.325505",
+    "scan_ms": 578,
     "oid_total": 37,
     "oid_active": 14,
     "oid_inactive": 3,
@@ -26,7 +179,7 @@
         "description": "sys_uptime",
         "unit": "str",
         "active": true,
-        "last_value": "356157500"
+        "last_value": "362705100"
       },
       "sys_hostname": {
         "oid": "1.3.6.1.2.1.1.5.0",
@@ -42,7 +195,7 @@
         "type": "int",
         "category": "counter",
         "active": true,
-        "last_value": "129796"
+        "last_value": "129797"
       },
       "print_color": {
         "oid": "1.3.6.1.2.1.43.10.2.1.4.1.2",
@@ -269,9 +422,9 @@
     },
     "current_vals": {
       "sys_descr": "TOSHIBA e-STUDIO2505AC",
-      "sys_uptime": "356157500",
+      "sys_uptime": "362705100",
       "sys_hostname": "TOSHIBA e-STUDIO2505AC",
-      "print_total": "129796",
+      "print_total": "129797",
       "toner_name_1": "Black Toner",
       "toner_remain_1": "45",
       "toner_max_1": "100",
@@ -312,17 +465,167 @@
       "model": "MFP11917633",
       "serial": "CFDG62088",
       "brand": "mfp11917633",
-      "total_pages": 129796,
+      "total_pages": 129797,
       "toner_pct": null,
       "device_type": "color"
+    }
+  },
+  "172.16.25.36": {
+    "ip": "172.16.25.36",
+    "brand": "hp",
+    "device_type": "mono",
+    "scanned_at": "2026-06-16T08:32:14.596686",
+    "scan_ms": 453,
+    "oid_total": 16,
+    "oid_active": 7,
+    "oid_inactive": 3,
+    "oid_rejected": 3,
+    "oids": {
+      "sys_descr": {
+        "oid": "1.3.6.1.2.1.1.1.0",
+        "type": "str",
+        "category": "sys",
+        "description": "sys_descr",
+        "unit": "str",
+        "active": true,
+        "last_value": "HP ETHERNET MULTI-ENVIRONMENT,ROM none,JETDIRECT,JD153,EEPROM JSI23900064,CIDATE 03/18/2024"
+      },
+      "sys_uptime": {
+        "oid": "1.3.6.1.2.1.1.3.0",
+        "type": "int",
+        "category": "sys",
+        "description": "sys_uptime",
+        "unit": "str",
+        "active": true,
+        "last_value": "35392"
+      },
+      "sys_hostname": {
+        "oid": "1.3.6.1.2.1.1.5.0",
+        "type": "str",
+        "category": "sys",
+        "description": "sys_hostname",
+        "unit": "str",
+        "active": true,
+        "last_value": "NPIAB3498"
+      },
+      "print_total": {
+        "oid": "1.3.6.1.2.1.43.10.2.1.4.1.1",
+        "type": "int",
+        "category": "counter",
+        "active": true,
+        "last_value": "19333"
+      },
+      "print_color": {
+        "oid": "1.3.6.1.2.1.43.10.2.1.4.1.2",
+        "active": false
+      },
+      "print_mono": {
+        "oid": "1.3.6.1.2.1.43.10.2.1.4.1.3",
+        "active": false
+      },
+      "prt_marker_total": {
+        "oid": "1.3.6.1.4.1.1602.1.11.2.1.1.3.1",
+        "active": false
+      },
+      "toner_name_1": {
+        "oid": "1.3.6.1.2.1.43.11.1.1.6.1.1",
+        "type": "str",
+        "category": "identity",
+        "active": true,
+        "last_value": "Black Cartridge 87A HP CF287A"
+      },
+      "toner_remain_1": {
+        "oid": "1.3.6.1.2.1.43.11.1.1.9.1.1",
+        "type": "int",
+        "category": "supply",
+        "active": true,
+        "last_value": "52"
+      },
+      "toner_max_1": {
+        "oid": "1.3.6.1.2.1.43.11.1.1.8.1.1",
+        "type": "int",
+        "category": "supply",
+        "active": true,
+        "last_value": "100"
+      },
+      "tray1_name": {
+        "oid": "1.3.6.1.2.1.43.8.2.1.13.1.1",
+        "type": "str",
+        "category": "identity",
+        "active": true,
+        "last_value": "Tray 1"
+      },
+      "tray1_cap": {
+        "oid": "1.3.6.1.2.1.43.8.2.1.9.1.1",
+        "type": "int",
+        "category": "tray",
+        "active": true,
+        "last_value": "100"
+      },
+      "tray1_level": {
+        "oid": "1.3.6.1.2.1.43.8.2.1.10.1.1",
+        "type": "int",
+        "category": "tray",
+        "active": true,
+        "last_value": "-3"
+      },
+      "tray2_name": {
+        "oid": "1.3.6.1.2.1.43.8.2.1.13.1.2",
+        "type": "str",
+        "category": "identity",
+        "active": true,
+        "last_value": "Tray 2"
+      },
+      "tray2_cap": {
+        "oid": "1.3.6.1.2.1.43.8.2.1.9.1.2",
+        "type": "int",
+        "category": "tray",
+        "active": true,
+        "last_value": "550"
+      },
+      "tray2_level": {
+        "oid": "1.3.6.1.2.1.43.8.2.1.10.1.2",
+        "type": "int",
+        "category": "tray",
+        "active": true,
+        "last_value": "-3"
+      }
+    },
+    "current_vals": {
+      "sys_descr": "HP ETHERNET MULTI-ENVIRONMENT,ROM none,JETDIRECT,JD153,EEPROM JSI23900064,CIDATE 03/18/2024",
+      "sys_uptime": "35392",
+      "sys_hostname": "NPIAB3498",
+      "print_total": "19333",
+      "toner_name_1": "Black Cartridge 87A HP CF287A",
+      "toner_remain_1": "52",
+      "toner_max_1": "100",
+      "tray1_name": "Tray 1",
+      "tray1_cap": "100",
+      "tray1_level": "-3",
+      "tray2_name": "Tray 2",
+      "tray2_cap": "550",
+      "tray2_level": "-3"
+    },
+    "rejected_oids": {
+      "print_color": "1.3.6.1.2.1.43.10.2.1.4.1.2",
+      "print_mono": "1.3.6.1.2.1.43.10.2.1.4.1.3",
+      "prt_marker_total": "1.3.6.1.4.1.1602.1.11.2.1.1.3.1"
+    },
+    "summary": {
+      "model": "HP LaserJet M506",
+      "serial": "PHNCL9M0BT",
+      "brand": "hp",
+      "total_pages": 19333,
+      "toner_pct": null,
+      "device_type": "mono"
     }
   },
   "172.16.25.34": {
     "ip": "172.16.25.34",
     "brand": "hp",
     "device_type": "mono",
-    "scanned_at": "2026-06-15T14:20:57.846009",
-    "scan_ms": 537,
+    "scanned_at": "2026-06-16T08:32:14.730742",
+    "scan_ms": 467,
     "oid_total": 19,
     "oid_active": 8,
     "oid_inactive": 3,
@@ -344,7 +647,7 @@
         "description": "sys_uptime",
         "unit": "str",
         "active": true,
-        "last_value": "291832781"
+        "last_value": "298340947"
       },
       "sys_hostname": {
         "oid": "1.3.6.1.2.1.1.5.0",
@@ -360,7 +663,7 @@
         "type": "int",
         "category": "counter",
         "active": true,
-        "last_value": "49485"
+        "last_value": "49505"
       },
       "print_color": {
         "oid": "1.3.6.1.2.1.43.10.2.1.4.1.2",
@@ -461,9 +764,9 @@
     },
     "current_vals": {
       "sys_descr": "HP ETHERNET MULTI-ENVIRONMENT,ROM none,JETDIRECT,JD153,EEPROM JSI25080020,CIDATE 07/17/2024",
-      "sys_uptime": "291832781",
+      "sys_uptime": "298340947",
       "sys_hostname": "NPI09CEFC",
-      "print_total": "49485",
+      "print_total": "49505",
       "toner_name_1": "Black Cartridge HP 87A (CF287A)",
       "toner_remain_1": "0",
       "toner_max_1": "100",
@@ -486,7 +789,160 @@
       "model": "HP LaserJet MFP M527",
       "serial": "MXCCM5M19V",
       "brand": "hp",
-      "total_pages": 49485,
+      "total_pages": 49505,
+      "toner_pct": null,
+      "device_type": "mono"
+    }
+  },
+  "172.16.32.42": {
+    "ip": "172.16.32.42",
+    "brand": "canon",
+    "device_type": "mono",
+    "scanned_at": "2026-06-16T08:32:16.837210",
+    "scan_ms": 1285,
+    "oid_total": 16,
+    "oid_active": 8,
+    "oid_inactive": 2,
+    "oid_rejected": 2,
+    "oids": {
+      "sys_descr": {
+        "oid": "1.3.6.1.2.1.1.1.0",
+        "type": "str",
+        "category": "sys",
+        "description": "sys_descr",
+        "unit": "str",
+        "active": true,
+        "last_value": "Canon MF230 Series /P"
+      },
+      "sys_uptime": {
+        "oid": "1.3.6.1.2.1.1.3.0",
+        "type": "int",
+        "category": "sys",
+        "description": "sys_uptime",
+        "unit": "str",
+        "active": true,
+        "last_value": "6825136"
+      },
+      "sys_hostname": {
+        "oid": "1.3.6.1.2.1.1.5.0",
+        "type": "str",
+        "category": "sys",
+        "description": "sys_hostname",
+        "unit": "str",
+        "active": true,
+        "last_value": "MF230 Series"
+      },
+      "print_total": {
+        "oid": "1.3.6.1.2.1.43.10.2.1.4.1.1",
+        "type": "int",
+        "category": "counter",
+        "active": true,
+        "last_value": "8350"
+      },
+      "print_color": {
+        "oid": "1.3.6.1.2.1.43.10.2.1.4.1.2",
+        "active": false
+      },
+      "print_mono": {
+        "oid": "1.3.6.1.2.1.43.10.2.1.4.1.3",
+        "active": false
+      },
+      "prt_marker_total": {
+        "oid": "1.3.6.1.4.1.1602.1.11.2.1.1.3.1",
+        "type": "int",
+        "category": "counter",
+        "active": true,
+        "last_value": "8350"
+      },
+      "toner_name_1": {
+        "oid": "1.3.6.1.2.1.43.11.1.1.6.1.1",
+        "type": "str",
+        "category": "identity",
+        "active": true,
+        "last_value": "Cartridge 737"
+      },
+      "toner_remain_1": {
+        "oid": "1.3.6.1.2.1.43.11.1.1.9.1.1",
+        "type": "int",
+        "category": "supply",
+        "active": true,
+        "last_value": "0"
+      },
+      "toner_max_1": {
+        "oid": "1.3.6.1.2.1.43.11.1.1.8.1.1",
+        "type": "int",
+        "category": "supply",
+        "active": true,
+        "last_value": "100"
+      },
+      "tray1_name": {
+        "oid": "1.3.6.1.2.1.43.8.2.1.13.1.1",
+        "type": "str",
+        "category": "identity",
+        "active": true,
+        "last_value": "Stack Bypass"
+      },
+      "tray1_cap": {
+        "oid": "1.3.6.1.2.1.43.8.2.1.9.1.1",
+        "type": "int",
+        "category": "tray",
+        "active": true,
+        "last_value": "1"
+      },
+      "tray1_level": {
+        "oid": "1.3.6.1.2.1.43.8.2.1.10.1.1",
+        "type": "int",
+        "category": "tray",
+        "active": true,
+        "last_value": "0"
+      },
+      "tray2_name": {
+        "oid": "1.3.6.1.2.1.43.8.2.1.13.1.2",
+        "type": "str",
+        "category": "identity",
+        "active": true,
+        "last_value": "Drawer1"
+      },
+      "tray2_cap": {
+        "oid": "1.3.6.1.2.1.43.8.2.1.9.1.2",
+        "type": "int",
+        "category": "tray",
+        "active": true,
+        "last_value": "250"
+      },
+      "tray2_level": {
+        "oid": "1.3.6.1.2.1.43.8.2.1.10.1.2",
+        "type": "int",
+        "category": "tray",
+        "active": true,
+        "last_value": "0"
+      }
+    },
+    "current_vals": {
+      "sys_descr": "Canon MF230 Series /P",
+      "sys_uptime": "6825136",
+      "sys_hostname": "MF230 Series",
+      "print_total": "8350",
+      "prt_marker_total": "8350",
+      "toner_name_1": "Cartridge 737",
+      "toner_remain_1": "0",
+      "toner_max_1": "100",
+      "tray1_name": "Stack Bypass",
+      "tray1_cap": "1",
+      "tray1_level": "0",
+      "tray2_name": "Drawer1",
+      "tray2_cap": "250",
+      "tray2_level": "0"
+    },
+    "rejected_oids": {
+      "print_color": "1.3.6.1.2.1.43.10.2.1.4.1.2",
+      "print_mono": "1.3.6.1.2.1.43.10.2.1.4.1.3"
+    },
+    "summary": {
+      "model": "Canon MF230 Series",
+      "serial": "YJN70787",
+      "brand": "canon",
+      "total_pages": 8350,
       "toner_pct": null,
       "device_type": "mono"
     }
@@ -495,8 +951,8 @@
     "ip": "172.16.25.54",
     "brand": "mfp07622411",
     "device_type": "color",
-    "scanned_at": "2026-06-15T14:21:00.006006",
-    "scan_ms": 2436,
+    "scanned_at": "2026-06-16T08:32:16.932922",
+    "scan_ms": 2519,
     "oid_total": 34,
     "oid_active": 13,
     "oid_inactive": 3,
@@ -518,7 +974,7 @@
         "description": "sys_uptime",
         "unit": "str",
         "active": true,
-        "last_value": "346216500"
+        "last_value": "352759700"
       },
       "sys_hostname": {
         "oid": "1.3.6.1.2.1.1.5.0",
@@ -740,7 +1196,7 @@
     },
     "current_vals": {
       "sys_descr": "TOSHIBA e-STUDIO2050C",
-      "sys_uptime": "346216500",
+      "sys_uptime": "352759700",
       "sys_hostname": "TOSHIBA e-STUDIO2050C",
       "print_total": "160267",
       "toner_name_1": "Black Toner",
@@ -785,165 +1241,12 @@
       "device_type": "color"
     }
   },
-  "172.16.32.42": {
-    "ip": "172.16.32.42",
-    "brand": "canon",
-    "device_type": "mono",
-    "scanned_at": "2026-06-15T14:21:01.561437",
-    "scan_ms": 1296,
-    "oid_total": 16,
-    "oid_active": 8,
-    "oid_inactive": 2,
-    "oid_rejected": 2,
-    "oids": {
-      "sys_descr": {
-        "oid": "1.3.6.1.2.1.1.1.0",
-        "type": "str",
-        "category": "sys",
-        "description": "sys_descr",
-        "unit": "str",
-        "active": true,
-        "last_value": "Canon MF230 Series /P"
-      },
-      "sys_uptime": {
-        "oid": "1.3.6.1.2.1.1.3.0",
-        "type": "int",
-        "category": "sys",
-        "description": "sys_uptime",
-        "unit": "str",
-        "active": true,
-        "last_value": "303699"
-      },
-      "sys_hostname": {
-        "oid": "1.3.6.1.2.1.1.5.0",
-        "type": "str",
-        "category": "sys",
-        "description": "sys_hostname",
-        "unit": "str",
-        "active": true,
-        "last_value": "MF230 Series"
-      },
-      "print_total": {
-        "oid": "1.3.6.1.2.1.43.10.2.1.4.1.1",
-        "type": "int",
-        "category": "counter",
-        "active": true,
-        "last_value": "8350"
-      },
-      "print_color": {
-        "oid": "1.3.6.1.2.1.43.10.2.1.4.1.2",
-        "active": false
-      },
-      "print_mono": {
-        "oid": "1.3.6.1.2.1.43.10.2.1.4.1.3",
-        "active": false
-      },
-      "prt_marker_total": {
-        "oid": "1.3.6.1.4.1.1602.1.11.2.1.1.3.1",
-        "type": "int",
-        "category": "counter",
-        "active": true,
-        "last_value": "8350"
-      },
-      "toner_name_1": {
-        "oid": "1.3.6.1.2.1.43.11.1.1.6.1.1",
-        "type": "str",
-        "category": "identity",
-        "active": true,
-        "last_value": "Cartridge 737"
-      },
-      "toner_remain_1": {
-        "oid": "1.3.6.1.2.1.43.11.1.1.9.1.1",
-        "type": "int",
-        "category": "supply",
-        "active": true,
-        "last_value": "0"
-      },
-      "toner_max_1": {
-        "oid": "1.3.6.1.2.1.43.11.1.1.8.1.1",
-        "type": "int",
-        "category": "supply",
-        "active": true,
-        "last_value": "100"
-      },
-      "tray1_name": {
-        "oid": "1.3.6.1.2.1.43.8.2.1.13.1.1",
-        "type": "str",
-        "category": "identity",
-        "active": true,
-        "last_value": "Stack Bypass"
-      },
-      "tray1_cap": {
-        "oid": "1.3.6.1.2.1.43.8.2.1.9.1.1",
-        "type": "int",
-        "category": "tray",
-        "active": true,
-        "last_value": "1"
-      },
-      "tray1_level": {
-        "oid": "1.3.6.1.2.1.43.8.2.1.10.1.1",
-        "type": "int",
-        "category": "tray",
-        "active": true,
-        "last_value": "0"
-      },
-      "tray2_name": {
-        "oid": "1.3.6.1.2.1.43.8.2.1.13.1.2",
-        "type": "str",
-        "category": "identity",
-        "active": true,
-        "last_value": "Drawer1"
-      },
-      "tray2_cap": {
-        "oid": "1.3.6.1.2.1.43.8.2.1.9.1.2",
-        "type": "int",
-        "category": "tray",
-        "active": true,
-        "last_value": "250"
-      },
-      "tray2_level": {
-        "oid": "1.3.6.1.2.1.43.8.2.1.10.1.2",
-        "type": "int",
-        "category": "tray",
-        "active": true,
-        "last_value": "0"
-      }
-    },
-    "current_vals": {
-      "sys_descr": "Canon MF230 Series /P",
-      "sys_uptime": "303699",
-      "sys_hostname": "MF230 Series",
-      "print_total": "8350",
-      "prt_marker_total": "8350",
-      "toner_name_1": "Cartridge 737",
-      "toner_remain_1": "0",
-      "toner_max_1": "100",
-      "tray1_name": "Stack Bypass",
-      "tray1_cap": "1",
-      "tray1_level": "0",
-      "tray2_name": "Drawer1",
-      "tray2_cap": "250",
-      "tray2_level": "0"
-    },
-    "rejected_oids": {
-      "print_color": "1.3.6.1.2.1.43.10.2.1.4.1.2",
-      "print_mono": "1.3.6.1.2.1.43.10.2.1.4.1.3"
-    },
-    "summary": {
-      "model": "Canon MF230 Series",
-      "serial": "YJN70787",
-      "brand": "canon",
-      "total_pages": 8350,
-      "toner_pct": null,
-      "device_type": "mono"
-    }
-  },
   "172.16.32.41": {
     "ip": "172.16.32.41",
     "brand": "mfp11624818",
     "device_type": "mono",
-    "scanned_at": "2026-06-15T14:21:05.442221",
-    "scan_ms": 6438,
+    "scanned_at": "2026-06-16T08:32:17.986056",
+    "scan_ms": 2420,
     "oid_total": 22,
     "oid_active": 9,
     "oid_inactive": 3,
@@ -965,7 +1268,7 @@
         "description": "sys_uptime",
         "unit": "str",
         "active": true,
-        "last_value": "621193900"
+        "last_value": "627729200"
       },
       "sys_hostname": {
         "oid": "1.3.6.1.2.1.1.5.0",
@@ -981,7 +1284,7 @@
         "type": "int",
         "category": "counter",
         "active": true,
-        "last_value": "237306"
+        "last_value": "237369"
       },
       "print_color": {
         "oid": "1.3.6.1.2.1.43.10.2.1.4.1.2",
@@ -1056,7 +1359,7 @@
         "type": "int",
         "category": "tray",
         "active": true,
-        "last_value": "25"
+        "last_value": "100"
       },
       "tray2_name": {
         "oid": "1.3.6.1.2.1.43.8.2.1.13.1.2",
@@ -1098,14 +1401,14 @@
         "type": "int",
         "category": "tray",
         "active": true,
-        "last_value": "0"
+        "last_value": "-3"
       }
     },
     "current_vals": {
       "sys_descr": "TOSHIBA e-STUDIO257",
-      "sys_uptime": "621193900",
+      "sys_uptime": "627729200",
       "sys_hostname": "TOSHIBA e-STUDIO257",
-      "print_total": "237306",
+      "print_total": "237369",
       "toner_name_1": "Black Toner",
       "toner_remain_1": "1",
       "toner_max_1": "100",
@@ -1114,13 +1417,13 @@
       "toner_max_5": "100",
       "tray1_name": "Drawer 1",
       "tray1_cap": "550",
-      "tray1_level": "25",
+      "tray1_level": "100",
       "tray2_name": "Drawer 2",
       "tray2_cap": "550",
       "tray2_level": "25",
       "tray6_name": "Bypass Tray",
       "tray6_cap": "100",
-      "tray6_level": "0"
+      "tray6_level": "-3"
     },
     "rejected_oids": {
       "print_color": "1.3.6.1.2.1.43.10.2.1.4.1.2",
@@ -1131,7 +1434,7 @@
       "model": "MFP11624818",
       "serial": "CEBF57491",
       "brand": "mfp11624818",
-      "total_pages": 237306,
+      "total_pages": 237369,
       "toner_pct": null,
       "device_type": "mono"
     }
@@ -1140,8 +1443,8 @@
     "ip": "172.16.0.42",
     "brand": "hp",
     "device_type": "mono",
-    "scanned_at": "2026-06-15T14:21:08.852190",
-    "scan_ms": 8256,
+    "scanned_at": "2026-06-16T08:32:18.916081",
+    "scan_ms": 1777,
     "oid_total": 13,
     "oid_active": 6,
     "oid_inactive": 3,
@@ -1163,7 +1466,7 @@
         "description": "sys_uptime",
         "unit": "str",
         "active": true,
-        "last_value": "123554"
+        "last_value": "6670537"
       },
       "sys_hostname": {
         "oid": "1.3.6.1.2.1.1.5.0",
@@ -1179,7 +1482,7 @@
         "type": "int",
         "category": "counter",
         "active": true,
-        "last_value": "58499"
+        "last_value": "58506"
       },
       "print_color": {
         "oid": "1.3.6.1.2.1.43.10.2.1.4.1.2",
@@ -1238,9 +1541,9 @@
     },
     "current_vals": {
       "sys_descr": "HP ETHERNET MULTI-ENVIRONMENT,SN:CNB9H314LT,FN:Y322GJD,SVCID:26219,PID:HP LaserJet Pro MFP M225dn",
-      "sys_uptime": "123554",
+      "sys_uptime": "6670537",
       "sys_hostname": "NPI0CEC36",
-      "print_total": "58499",
+      "print_total": "58506",
       "toner_name_1": "Black Cartridge HP CF283A",
       "toner_remain_1": "0",
       "toner_max_1": "100",
@@ -1257,7 +1560,7 @@
       "model": "HP LaserJet Pro MFP M225dn",
       "serial": "CNB9H314LT",
       "brand": "hp",
-      "total_pages": 58499,
+      "total_pages": 58506,
       "toner_pct": null,
       "device_type": "mono"
     }
@@ -1266,8 +1569,8 @@
     "ip": "172.16.0.43",
     "brand": "canon",
     "device_type": "mono",
-    "scanned_at": "2026-06-15T14:21:10.813733",
-    "scan_ms": 9607,
+    "scanned_at": "2026-06-16T08:32:20.322455",
+    "scan_ms": 3191,
     "oid_total": 25,
     "oid_active": 10,
     "oid_inactive": 6,
@@ -1289,7 +1592,7 @@
         "description": "sys_uptime",
         "unit": "str",
         "active": true,
-        "last_value": "130883"
+        "last_value": "6690856"
       },
       "sys_hostname": {
         "oid": "1.3.6.1.2.1.1.5.0",
@@ -1305,7 +1608,7 @@
         "type": "int",
         "category": "counter",
         "active": true,
-        "last_value": "142766"
+        "last_value": "142767"
       },
       "print_color": {
         "oid": "1.3.6.1.2.1.43.10.2.1.4.1.2",
@@ -1448,9 +1751,9 @@
     },
     "current_vals": {
       "sys_descr": "Canon LBP2330K Series /P",
-      "sys_uptime": "130883",
+      "sys_uptime": "6690856",
       "sys_hostname": "",
-      "print_total": "142766",
+      "print_total": "142767",
       "toner_name_1": "Canon Cartridge 324 II",
       "toner_remain_1": "100",
       "toner_max_1": "100",
@@ -1479,7 +1782,7 @@
       "model": "Canon LBP2330K Series",
       "serial": "012AN235F0E6",
       "brand": "canon",
-      "total_pages": 142766,
+      "total_pages": 142767,
       "toner_pct": null,
       "device_type": "mono"
     }
@@ -1488,8 +1791,8 @@
     "ip": "172.16.0.41",
     "brand": "mfp07893025",
     "device_type": "mono",
-    "scanned_at": "2026-06-15T14:21:15.631165",
-    "scan_ms": 12654,
+    "scanned_at": "2026-06-16T08:32:24.418699",
+    "scan_ms": 6176,
     "oid_total": 25,
     "oid_active": 10,
     "oid_inactive": 3,
@@ -1511,7 +1814,7 @@
         "description": "sys_uptime",
         "unit": "str",
         "active": true,
-        "last_value": "131400"
+        "last_value": "6678300"
       },
       "sys_hostname": {
         "oid": "1.3.6.1.2.1.1.5.0",
@@ -1527,7 +1830,7 @@
         "type": "int",
         "category": "counter",
         "active": true,
-        "last_value": "262419"
+        "last_value": "262486"
       },
       "print_color": {
         "oid": "1.3.6.1.2.1.43.10.2.1.4.1.2",
@@ -1670,9 +1973,9 @@
     },
     "current_vals": {
       "sys_descr": "TOSHIBA e-STUDIO306",
-      "sys_uptime": "131400",
+      "sys_uptime": "6678300",
       "sys_hostname": "TOSHIBA e-STUDIO306",
-      "print_total": "262419",
+      "print_total": "262486",
       "toner_name_1": "Black Toner",
       "toner_remain_1": "100",
       "toner_max_1": "100",
@@ -1701,7 +2004,7 @@
       "model": "MFP07893025",
       "serial": "C2CD27415",
       "brand": "mfp07893025",
-      "total_pages": 262419,
+      "total_pages": 262486,
       "toner_pct": null,
       "device_type": "mono"
     }
@@ -1710,8 +2013,8 @@
     "ip": "172.16.0.40",
     "brand": "toshibablack61",
     "device_type": "mono",
-    "scanned_at": "2026-06-15T14:21:15.745739",
-    "scan_ms": 12767,
+    "scanned_at": "2026-06-16T08:32:24.466416",
+    "scan_ms": 6244,
     "oid_total": 22,
     "oid_active": 9,
     "oid_inactive": 3,
@@ -1733,7 +2036,7 @@
         "description": "sys_uptime",
         "unit": "str",
         "active": true,
-        "last_value": "131500"
+        "last_value": "6678300"
       },
       "sys_hostname": {
         "oid": "1.3.6.1.2.1.1.5.0",
@@ -1749,7 +2052,7 @@
         "type": "int",
         "category": "counter",
         "active": true,
-        "last_value": "701010"
+        "last_value": "701015"
       },
       "print_color": {
         "oid": "1.3.6.1.2.1.43.10.2.1.4.1.2",
@@ -1871,9 +2174,9 @@
     },
     "current_vals": {
       "sys_descr": "TOSHIBA e-STUDIO306",
-      "sys_uptime": "131500",
+      "sys_uptime": "6678300",
       "sys_hostname": "TOSHIBA e-STUDIO306",
-      "print_total": "701010",
+      "print_total": "701015",
       "toner_name_1": "Black Toner",
       "toner_remain_1": "100",
       "toner_max_1": "100",
@@ -1899,7 +2202,7 @@
       "model": "ToshibaBlack61",
       "serial": "C2L213591",
       "brand": "toshibablack61",
-      "total_pages": 701010,
+      "total_pages": 701015,
       "toner_pct": null,
       "device_type": "mono"
     }

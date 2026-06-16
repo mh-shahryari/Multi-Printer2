@@ -5,6 +5,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "hp"
   },
   {
@@ -13,6 +14,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "imamat",
     "brand": "brother"
   },
   {
@@ -21,6 +23,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "toshiba"
   },
   {
@@ -29,6 +32,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "canon"
   },
   {
@@ -37,6 +41,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "canon"
   },
   {
@@ -45,6 +50,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "hp"
   },
   {
@@ -53,6 +59,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "hp"
   },
   {
@@ -61,6 +68,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "canon"
   },
   {
@@ -69,6 +77,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "toshiba"
   },
   {
@@ -77,6 +86,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "toshiba"
   },
   {
@@ -85,6 +95,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "canon"
   },
   {
@@ -93,6 +104,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "toshiba"
   },
   {
@@ -101,6 +113,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "hp"
   },
   {
@@ -109,6 +122,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "brother"
   },
   {
@@ -117,6 +131,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "toshiba"
   },
   {
@@ -125,6 +140,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "canon"
   },
   {
@@ -132,7 +148,8 @@
     "name": "Printer 172.16.32.40",
     "community": "public",
     "nickname": "",
-    "device_type": "mono"
+    "device_type": "mono",
+    "group": ""
   },
   {
     "ip": "172.16.25.58",
@@ -140,6 +157,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "hp"
   },
   {
@@ -148,6 +166,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "canon"
   },
   {
@@ -156,6 +175,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "toshiba"
   },
   {
@@ -164,6 +184,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "canon"
   },
   {
@@ -172,6 +193,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "canon"
   },
   {
@@ -180,6 +202,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "sensor"
   },
   {
@@ -188,6 +211,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "toshiba"
   },
   {
@@ -196,6 +220,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "hp"
   },
   {
@@ -204,6 +229,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "toshiba"
   },
   {
@@ -212,6 +238,7 @@
     "community": "public",
     "nickname": "",
     "device_type": "mono",
+    "group": "",
     "brand": "toshiba"
   }
 ]
